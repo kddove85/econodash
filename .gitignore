@@ -1,0 +1,7 @@
+venv/
+media/boardmembers/*
+media/greyhounds/*
+.idea/
+app/__pycache__/
+*.pyc
+*.sqlite3
