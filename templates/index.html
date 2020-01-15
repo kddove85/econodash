@@ -2,37 +2,43 @@
 
 {% block app_content %}
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js'></script>
 
 <h1 align="center">Economic Indicators</h1>
 
-<h1>GDP Values</h1>
+<h3>GDP Values (Billions of USD)</h3>
 <div class="jumbotron">
     <canvas id="chart" style="width:1024px;height:384px"></canvas>
 </div>
-<p>Gross domestic product (GDP) is a monetary measure of the market value of all the final goods and services produced in a specific time period.</p>
+<p>
+    Gross domestic product (GDP) is a monetary measure of the market value of all the final goods and services produced
+    in a specific time period.
+</p>
 <br>
 <br>
 
-<h1>GDP Annual Increases</h1>
+<h3>GDP Annual Increases</h3>
 <div class="jumbotron"></div>
 <br>
 <br>
 
-<h1>Interest Rates</h1>
+<h3>Interest Rates (%)</h3>
 <div class="jumbotron">
     <canvas id="interest" style="width:1024px;height:384px"></canvas>
 </div>
-<p>In the United States, the federal funds rate is the interest rate at which depository institutions (banks and credit unions) lend reserve balances to other depository institutions overnight on an uncollateralized basis.</p>
+<p>
+    In the United States, the federal funds rate is the interest rate at which depository institutions (banks and
+    credit unions) lend reserve balances to other depository institutions overnight on an uncollateralized basis.
+</p>
 <br>
 <br>
 
-<h1>Annual Inflation Rate</h1>
+<h3>Annual Inflation Rates (%)</h3>
 <div class="jumbotron"></div>
 <br>
 <br>
 
-<h1>Unemployment Rates</h1>
+<h3>Unemployment Rates (%)</h3>
 <div class="jumbotron">
     <canvas id="unemployment" style="width:1024px;height:384px"></canvas>
 </div>
@@ -40,19 +46,28 @@
 <br>
 <br>
 
-<h1>Balance of Trade</h1>
+<h3>Balance of Trade (Billions of USD)</h3>
 <div class="jumbotron">
     <canvas id="balance_of_trade" style="width:1024px;height:384px"></canvas>
 </div>
-<p>The balance of trade, commercial balance, or net exports (sometimes symbolized as NX), is the difference between the monetary value of a nation's exports and imports over a certain time period.</p>
+<p>
+    The balance of trade, commercial balance, or net exports (sometimes symbolized as NX), is the difference between
+    the monetary value of a nation's exports and imports over a certain time period.
+</p>
 <br>
 <br>
 
-<h1>Debt to GDP Ratios</h1>
+<h3>Debt to GDP Ratios (%)</h3>
 <div class="jumbotron">
     <canvas id="debt_to_gdp" style="width:1024px;height:384px"></canvas>
 </div>
-<p> the debt-to-GDP ratio is the ratio between a country's government debt (measured in units of currency) and its gross domestic product (GDP) (measured in units of currency per year). A low debt-to-GDP ratio indicates an economy that produces and sells goods and services sufficient to pay back debts without incurring further debt.</p>
+<p>
+    The debt-to-GDP ratio is the ratio between a country's government debt (measured in units of currency) and its gross
+    domestic product (GDP) (measured in units of currency per year). A low debt-to-GDP ratio indicates an economy that
+    produces and sells goods and services sufficient to pay back debts without incurring further debt.
+    A high debt-to-GDP ratio indicates an economy that produces and sells goods and services, but not sufficient enough
+    to pay back debts without incurring further debt.
+</p>
 <br>
 <br>
 
@@ -65,25 +80,27 @@ function drawgraph(id, new_labels, values, maximum) {
       fillColor: "rgba(151,187,205,0.2)",
       strokeColor: "rgba(151,187,205,1)",
       pointColor: "rgba(151,187,205,1)",
-      data: values
+      data: values,
     }]
    }
    // get bar chart canvas
    var mychart = document.getElementById(id).getContext("2d");
-   steps = 10
-   max = maximum
-   // draw bar chart
-   new Chart(mychart).Bar(barData, {
-     scaleOverride: true,
-     scaleSteps: steps,
-     scaleStepWidth: Math.ceil(max / steps),
-     scaleStartValue: 0,
-     scaleShowVerticalLines: true,
-     scaleShowGridLines : true,
-     barShowStroke : true,
-     scaleShowLabels: true
-     }
-    );
+    var myBarChart = new Chart(mychart, {
+    type: 'bar',
+    data: barData,
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        legend: {
+            display: false
+        }
+    }
+});
 }
 
 drawgraph("chart", {{ response_obj['gdp_labels']|safe }}, {{ response_obj['gdp_values']|safe }}, {{ response_obj['gdp_values_max'] }});

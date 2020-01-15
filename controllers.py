@@ -8,30 +8,25 @@ bp = Blueprint('econodash', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    gdp_labels, gdp_values, gdp_value_max = quandl.get_gdp_values()
+    gdp_labels, gdp_values = quandl.get_gdp_values()
     # gdp_annual_increases = quandl.get_gdp_annual_increase()
-    interest_labels, interest_rates, interest_rates_max = quandl.get_effective_interest_rates()
+    interest_labels, interest_rates = quandl.get_effective_interest_rates()
     # inflation_rates = quandl.get_inflation_data_points()
-    unemployment_labels, unemployment_rates, unemployment_rates_max = quandl.get_unemployment_rates()
-    bot_labels, bot_values, bot_max = quandl.get_balance_of_trade()
-    debt_to_gdp_labels, debt_to_gdp_values, debt_to_gdp_max = quandl.get_government_debt_to_gdp()
+    unemployment_labels, unemployment_rates = quandl.get_unemployment_rates()
+    bot_labels, bot_values = quandl.get_balance_of_trade()
+    debt_to_gdp_labels, debt_to_gdp_values = quandl.get_government_debt_to_gdp()
     context = {'gdp_labels': gdp_labels,
                'gdp_values': gdp_values,
-               'gdp_values_max': gdp_value_max,
                # 'gdp_annual_increases': gdp_annual_increases,
                'interest_labels': interest_labels,
                'interest_rates': interest_rates,
-               'interest_rates_max': interest_rates_max,
                # 'inflation_rates': inflation_rates,
                'unemployment_labels': unemployment_labels,
                'unemployment_rates': unemployment_rates,
-               'unemployment_rates_max': unemployment_rates_max,
                'bot_labels': bot_labels,
                'bot_values': bot_values,
-               'bot_max': bot_max,
                'debt_to_gdp_labels': debt_to_gdp_labels,
-               'debt_to_gdp_values': debt_to_gdp_values,
-               'debt_to_gdp_max': debt_to_gdp_max}
+               'debt_to_gdp_values': debt_to_gdp_values}
     return render_template('index.html', response_obj=context)
 
 
