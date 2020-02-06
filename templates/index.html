@@ -7,6 +7,11 @@
 <h1 align="center">Economic Indicators</h1>
 
 <h3>GDP Values (Billions of USD)</h3>
+
+<div class="jumbotron">
+    <canvas id="new_chart" style="width:1024px;height:384px"></canvas>
+</div>
+
 <div class="jumbotron">
     <canvas id="chart" style="width:1024px;height:384px"></canvas>
 </div>
@@ -71,43 +76,46 @@
 <br>
 <br>
 
-<script>
-function drawgraph(id, new_labels, values, maximum) {
-  // bar chart data
-  var barData = {
-    labels: new_labels,
-    datasets : [{
-      fillColor: "rgba(151,187,205,0.2)",
-      strokeColor: "rgba(151,187,205,1)",
-      pointColor: "rgba(151,187,205,1)",
-      data: values,
-    }]
-   }
-   // get bar chart canvas
-   var mychart = document.getElementById(id).getContext("2d");
-    var myBarChart = new Chart(mychart, {
-    type: 'bar',
-    data: barData,
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
-        legend: {
-            display: false
-        }
-    }
-});
-}
+<!--<script>-->
+<!--function drawgraph(id, new_labels, values, maximum) {-->
+<!--  // bar chart data-->
+<!--  var barData = {-->
+<!--    labels: new_labels,-->
+<!--    datasets : [{-->
+<!--      fillColor: "rgba(151,187,205,0.2)",-->
+<!--      strokeColor: "rgba(151,187,205,1)",-->
+<!--      pointColor: "rgba(151,187,205,1)",-->
+<!--      data: values,-->
+<!--    }]-->
+<!--   }-->
+<!--   // get bar chart canvas-->
+<!--   var mychart = document.getElementById(id).getContext("2d");-->
+<!--    var myBarChart = new Chart(mychart, {-->
+<!--    type: 'bar',-->
+<!--    data: barData,-->
+<!--    options: {-->
+<!--        scales: {-->
+<!--            yAxes: [{-->
+<!--                ticks: {-->
+<!--                    beginAtZero: true-->
+<!--                }-->
+<!--            }]-->
+<!--        },-->
+<!--        legend: {-->
+<!--            display: false-->
+<!--        }-->
+<!--    }-->
+<!--});-->
+<!--}-->
 
-drawgraph("chart", {{ response_obj['gdp_labels']|safe }}, {{ response_obj['gdp_values']|safe }}, {{ response_obj['gdp_values_max'] }});
-drawgraph("interest", {{ response_obj['interest_labels']|safe }}, {{ response_obj['interest_rates']|safe }}, {{ response_obj['interest_rates_max'] }});
-drawgraph("unemployment", {{ response_obj['unemployment_labels']|safe }}, {{ response_obj['unemployment_rates']|safe }}, {{ response_obj['unemployment_rates_max'] }});
-drawgraph("balance_of_trade", {{ response_obj['bot_labels']|safe }}, {{ response_obj['bot_values']|safe }}, {{ response_obj['bot_max'] }});
-drawgraph("debt_to_gdp", {{ response_obj['debt_to_gdp_labels']|safe }}, {{ response_obj['debt_to_gdp_values']|safe }}, {{ response_obj['debt_to_gdp_max'] }});
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+<script>
+    new_drawgraph("new_chart", false, ["1900", "1901", "1902", "1903", "1904"], ["US"], [1, 4, 3, 5, 2] );
+    drawgraph("chart", false, {{ response_obj['gdp_labels']|safe }}, {{ response_obj['gdp_values']|safe }}, {{ response_obj['gdp_values_max'] }});
+    drawgraph("interest", true, {{ response_obj['interest_labels']|safe }}, {{ response_obj['interest_rates']|safe }}, {{ response_obj['interest_rates_max'] }});
+    drawgraph("unemployment", false, {{ response_obj['unemployment_labels']|safe }}, {{ response_obj['unemployment_rates']|safe }}, {{ response_obj['unemployment_rates_max'] }});
+    drawgraph("balance_of_trade", false, {{ response_obj['bot_labels']|safe }}, {{ response_obj['bot_values']|safe }}, {{ response_obj['bot_max'] }});
+    drawgraph("debt_to_gdp", false, {{ response_obj['debt_to_gdp_labels']|safe }}, {{ response_obj['debt_to_gdp_values']|safe }}, {{ response_obj['debt_to_gdp_max'] }});
 </script>
 
 

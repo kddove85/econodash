@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for, send_from_directory
 from integrations import quandl
+from integrations import imf
 import json
 import pandas as pd
 
@@ -8,6 +9,8 @@ bp = Blueprint('econodash', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
+    legends, labels, values = imf .get_data('IFS', 'Q', 'US', 'NGDP_XDC')
+    imf.get_data('IFS', 'Q', 'US+CN', 'NGDP_XDC')
     gdp_labels, gdp_values = quandl.get_gdp_values()
     # gdp_annual_increases = quandl.get_gdp_annual_increase()
     interest_labels, interest_rates = quandl.get_effective_interest_rates()
@@ -15,7 +18,8 @@ def index():
     unemployment_labels, unemployment_rates = quandl.get_unemployment_rates()
     bot_labels, bot_values = quandl.get_balance_of_trade()
     debt_to_gdp_labels, debt_to_gdp_values = quandl.get_government_debt_to_gdp()
-    context = {'gdp_labels': gdp_labels,
+    context = {'legends': legends, 'labels': labels, 'values': values,
+               'gdp_labels': gdp_labels,
                'gdp_values': gdp_values,
                # 'gdp_annual_increases': gdp_annual_increases,
                'interest_labels': interest_labels,
