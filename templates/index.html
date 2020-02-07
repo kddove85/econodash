@@ -110,7 +110,7 @@
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script>
-    new_drawgraph("new_chart", false, ["1900", "1901", "1902", "1903", "1904"], ["US"], [1, 4, 3, 5, 2] );
+    new_drawgraph("new_chart", false, {{ response_obj['labels']|safe }}, {{ response_obj['legends']|safe }}, {{ response_obj['values']|safe }}, {{ response_obj['colors']|safe }});
     drawgraph("chart", false, {{ response_obj['gdp_labels']|safe }}, {{ response_obj['gdp_values']|safe }}, {{ response_obj['gdp_values_max'] }});
     drawgraph("interest", true, {{ response_obj['interest_labels']|safe }}, {{ response_obj['interest_rates']|safe }}, {{ response_obj['interest_rates_max'] }});
     drawgraph("unemployment", false, {{ response_obj['unemployment_labels']|safe }}, {{ response_obj['unemployment_rates']|safe }}, {{ response_obj['unemployment_rates_max'] }});

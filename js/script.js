@@ -26,42 +26,28 @@ function drawgraph(id, startAtZero, new_labels, values, maximum) {
     }
 });
 }
-function set_data(legends, values) {
+function set_data(legends, values, colors) {
     console.log(legends);
-        var datasets = [];
-            for (i in legends) {
-                console.log(i);
-                var dict = [];
-                dict.push({
-                    key:   "label",
-                    value: i
-                });
-                dict.push({
-                    key:   "backgroundColor",
-                    value: "#3e95cd"
-                });
-                dict.push({
-                    key:   "data",
-                    value: values
-                });
-                datasets.push(dict)
-            };
-        console.log(datasets);
-        return datasets;
-      };
+    var datasets = [];
+    for (i = 0; i < legends.length; i++) {
+        console.log(i);
+        var dict = {};
+        dict['label'] = legends[i];
+        dict['backgroundColor'] = colors[i];
+        dict['data'] = values[i];
+        datasets.push(dict);
+    };
+    console.log(datasets);
+    return datasets;
+};
 
-function new_drawgraph(id, startAtZero, new_labels, legends, values) {
-    console.log(id);
-    console.log(startAtZero);
-    console.log(new_labels);
-    console.log(legends);
-    console.log(values);
-    var datasets = []
+function new_drawgraph(id, startAtZero, new_labels, legends, values, colors) {
+    var my_datasets = set_data(legends, values, colors)
     new Chart(document.getElementById(id), {
         type: 'bar',
         data: {
           labels: new_labels,
-          datasets: set_data(legends, values)
+          datasets: my_datasets
         },
         options: {
           title: {
@@ -69,4 +55,6 @@ function new_drawgraph(id, startAtZero, new_labels, legends, values) {
             text: 'Population growth (millions)'
           }
         }
-})};
+})
+console.log(my_datasets)
+};
