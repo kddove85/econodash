@@ -49,12 +49,18 @@ function new_drawgraph(id, startAtZero, new_labels, legends, values, colors) {
           labels: new_labels,
           datasets: my_datasets
         },
-        options: {
-          title: {
-            display: true,
-            text: 'Population growth (millions)'
-          }
-        }
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+//                    max: 30000000,
+//                    min: 0,
+//                    stepSize: 3000000,
+//                    beginAtZero: true
+                }
+            }]
+        },
+     }
 })
 console.log(my_datasets)
 };

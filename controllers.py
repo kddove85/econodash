@@ -9,8 +9,8 @@ bp = Blueprint('econodash', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    # legends, labels, values, colors = imf .get_data('IFS', 'Q', 'US', 'NGDP_XDC')
-    legends, labels, values, colors = imf.get_data('IFS', 'Q', 'US+CN', 'NGDP_XDC')
+    legends_a, labels_a, values_a, colors_a = imf .get_data('IFS', 'A', 'US', 'NGDP_XDC')
+    legends, labels, values, colors = imf.get_data('IFS', 'A', 'US+CN+GB+JP+DE+SG+HK', 'NGDP_XDC')
     gdp_labels, gdp_values = quandl.get_gdp_values()
     # gdp_annual_increases = quandl.get_gdp_annual_increase()
     interest_labels, interest_rates = quandl.get_effective_interest_rates()
@@ -19,6 +19,7 @@ def index():
     bot_labels, bot_values = quandl.get_balance_of_trade()
     debt_to_gdp_labels, debt_to_gdp_values = quandl.get_government_debt_to_gdp()
     context = {'legends': legends, 'labels': labels, 'values': values, 'colors': colors,
+               'legends_a': legends_a, 'labels_a': labels_a, 'values_a': values_a, 'colors_a': colors_a,
                'gdp_labels': gdp_labels,
                'gdp_values': gdp_values,
                # 'gdp_annual_increases': gdp_annual_increases,
