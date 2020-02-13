@@ -9,8 +9,13 @@ bp = Blueprint('econodash', __name__)
 
 @bp.route('/', methods=['GET', 'POST'])
 def index():
-    legends_a, labels_a, values_a, colors_a = imf .get_data('IFS', 'A', 'US', 'NGDP_XDC')
-    legends, labels, values, colors = imf.get_data('IFS', 'A', 'US+CN+GB+JP+DE+SG+HK', 'NGDP_XDC')
+    boolean = True
+    if boolean:
+        boolean = False
+    if boolean:
+
+    domestic_gdp_legends, domestic_gdp_labels, domestic_gdp_values, domestic_gdp_colors = imf.get_data('IFS', 'A', 'US', 'NGDP_XDC')
+    comparative_gdp_legends, comparative_gdp_labels, comparative_gdp_values, comparative_gdp_colors = imf.get_data('IFS', 'A', 'US+CN+GB+JP+DE+SG+HK', 'NGDP_XDC')
     gdp_labels, gdp_values = quandl.get_gdp_values()
     # gdp_annual_increases = quandl.get_gdp_annual_increase()
     interest_labels, interest_rates = quandl.get_effective_interest_rates()
@@ -18,8 +23,16 @@ def index():
     unemployment_labels, unemployment_rates = quandl.get_unemployment_rates()
     bot_labels, bot_values = quandl.get_balance_of_trade()
     debt_to_gdp_labels, debt_to_gdp_values = quandl.get_government_debt_to_gdp()
-    context = {'legends': legends, 'labels': labels, 'values': values, 'colors': colors,
-               'legends_a': legends_a, 'labels_a': labels_a, 'values_a': values_a, 'colors_a': colors_a,
+    context = {'domestic_gdp_legends': domestic_gdp_legends,
+               'domestic_gdp_labels': domestic_gdp_labels,
+               'domestic_gdp_values': domestic_gdp_values,
+               'domestic_gdp_colors': domestic_gdp_colors,
+
+               'comparative_gdp_legends': comparative_gdp_legends,
+               'comparative_gdp_labels': comparative_gdp_labels,
+               'comparative_gdp_values': comparative_gdp_values,
+               'comparative_gdp_colors': comparative_gdp_colors,
+
                'gdp_labels': gdp_labels,
                'gdp_values': gdp_values,
                # 'gdp_annual_increases': gdp_annual_increases,

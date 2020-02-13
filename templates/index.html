@@ -9,16 +9,13 @@
 <h3>GDP Values (Billions of USD)</h3>
 
 <div class="jumbotron">
-    <canvas id="new_chart_a" style="width:1024px;height:384px"></canvas>
+    <canvas id="domestic_gdp_chart" style="width:1024px;height:384px"></canvas>
 </div>
 
 <div class="jumbotron">
-    <canvas id="new_chart" style="width:1024px;height:384px"></canvas>
+    <canvas id="comparative_gdp_chart" style="width:1024px;height:384px"></canvas>
 </div>
 
-<div class="jumbotron">
-    <canvas id="chart" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     Gross domestic product (GDP) is a monetary measure of the market value of all the final goods and services produced
     in a specific time period.
@@ -82,9 +79,20 @@
 
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script>
-    new_drawgraph("new_chart", false, {{ response_obj['labels']|safe }}, {{ response_obj['legends']|safe }}, {{ response_obj['values']|safe }}, {{ response_obj['colors']|safe }});
-    new_drawgraph("new_chart_a", false, {{ response_obj['labels_a']|safe }}, {{ response_obj['legends_a']|safe }}, {{ response_obj['values_a']|safe }}, {{ response_obj['colors_a']|safe }});
-    drawgraph("chart", false, {{ response_obj['gdp_labels']|safe }}, {{ response_obj['gdp_values']|safe }}, {{ response_obj['gdp_values_max'] }});
+    new_drawgraph("domestic_gdp_chart",
+        false,
+        {{ response_obj['domestic_gdp_labels']|safe }},
+        {{ response_obj['domestic_gdp_legends']|safe }},
+        {{ response_obj['domestic_gdp_values']|safe }},
+        {{ response_obj['domestic_gdp_colors']|safe }}
+    );
+    new_drawgraph("comparative_gdp_chart",
+        false,
+        {{ response_obj['comparative_gdp_labels']|safe }},
+        {{ response_obj['comparative_gdp_legends']|safe }},
+        {{ response_obj['comparative_gdp_values']|safe }},
+        {{ response_obj['comparative_gdp_colors']|safe }}
+    );
     drawgraph("interest", true, {{ response_obj['interest_labels']|safe }}, {{ response_obj['interest_rates']|safe }}, {{ response_obj['interest_rates_max'] }});
     drawgraph("unemployment", false, {{ response_obj['unemployment_labels']|safe }}, {{ response_obj['unemployment_rates']|safe }}, {{ response_obj['unemployment_rates_max'] }});
     drawgraph("balance_of_trade", false, {{ response_obj['bot_labels']|safe }}, {{ response_obj['bot_values']|safe }}, {{ response_obj['bot_max'] }});
