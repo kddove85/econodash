@@ -8,6 +8,11 @@
 
 <h3>GDP Values (Billions of USD)</h3>
 
+<p>
+    Gross domestic product (GDP) is a monetary measure of the market value of all the final goods and services produced
+    in a specific time period.
+</p>
+
 <div class="jumbotron">
     <canvas id="domestic_gdp_chart" style="width:1024px;height:384px"></canvas>
 </div>
@@ -16,26 +21,36 @@
     <canvas id="comparative_gdp_chart" style="width:1024px;height:384px"></canvas>
 </div>
 
-<p>
-    Gross domestic product (GDP) is a monetary measure of the market value of all the final goods and services produced
-    in a specific time period.
-</p>
 <br>
 <br>
 
-<h3>GDP Annual Increases</h3>
-<div class="jumbotron"></div>
+<h3>GDP Annual Increases (%)</h3>
+
+<p>
+    The Gross Domestic Product increase is the rate of growth of the value of all final goods and services produced
+    within a country in a given year.
+</p>
+
+<div class="jumbotron">
+        <canvas id="domestic_gdp_increase_chart" style="width:1024px;height:384px"></canvas>
+</div>
+
+<div class="jumbotron">
+        <canvas id="comparative_gdp_increase_chart" style="width:1024px;height:384px"></canvas>
+</div>
+
 <br>
 <br>
 
 <h3>Interest Rates (%)</h3>
-<div class="jumbotron">
-    <canvas id="interest" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     In the United States, the federal funds rate is the interest rate at which depository institutions (banks and
     credit unions) lend reserve balances to other depository institutions overnight on an uncollateralized basis.
 </p>
+<div class="jumbotron">
+    <canvas id="domestic_interest_rate_chart" style="width:1024px;height:384px"></canvas>
+</div>
+
 <br>
 <br>
 
@@ -45,28 +60,31 @@
 <br>
 
 <h3>Unemployment Rates (%)</h3>
-<div class="jumbotron">
-    <canvas id="unemployment" style="width:1024px;height:384px"></canvas>
-</div>
+
 <p>Unemployment is measured by the unemployment rate as the number of persons who are unemployed as a percentage of the labour force (the total number of people employed plus unemployed).</p>
+
+<div class="jumbotron">
+    <canvas id="domestic_unemployment_rate_chart" style="width:1024px;height:384px"></canvas>
+</div>
+
 <br>
 <br>
 
 <h3>Balance of Trade (Billions of USD)</h3>
-<div class="jumbotron">
-    <canvas id="balance_of_trade" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     The balance of trade, commercial balance, or net exports (sometimes symbolized as NX), is the difference between
     the monetary value of a nation's exports and imports over a certain time period.
 </p>
+<div class="jumbotron">
+    <canvas id="domestic_bot_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<div class="jumbotron">
+    <canvas id="comparative_bot_chart" style="width:1024px;height:384px"></canvas>
+</div>
 <br>
 <br>
 
 <h3>Debt to GDP Ratios (%)</h3>
-<div class="jumbotron">
-    <canvas id="debt_to_gdp" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     The debt-to-GDP ratio is the ratio between a country's government debt (measured in units of currency) and its gross
     domestic product (GDP) (measured in units of currency per year). A low debt-to-GDP ratio indicates an economy that
@@ -74,6 +92,10 @@
     A high debt-to-GDP ratio indicates an economy that produces and sells goods and services, but not sufficient enough
     to pay back debts without incurring further debt.
 </p>
+<div class="jumbotron">
+    <canvas id="debt_to_gdp" style="width:1024px;height:384px"></canvas>
+</div>
+
 <br>
 <br>
 
@@ -86,6 +108,7 @@
         {{ response_obj['domestic_gdp_values']|safe }},
         {{ response_obj['domestic_gdp_colors']|safe }}
     );
+
     new_drawgraph("comparative_gdp_chart",
         false,
         {{ response_obj['comparative_gdp_labels']|safe }},
@@ -93,10 +116,55 @@
         {{ response_obj['comparative_gdp_values']|safe }},
         {{ response_obj['comparative_gdp_colors']|safe }}
     );
-    drawgraph("interest", true, {{ response_obj['interest_labels']|safe }}, {{ response_obj['interest_rates']|safe }}, {{ response_obj['interest_rates_max'] }});
-    drawgraph("unemployment", false, {{ response_obj['unemployment_labels']|safe }}, {{ response_obj['unemployment_rates']|safe }}, {{ response_obj['unemployment_rates_max'] }});
-    drawgraph("balance_of_trade", false, {{ response_obj['bot_labels']|safe }}, {{ response_obj['bot_values']|safe }}, {{ response_obj['bot_max'] }});
-    drawgraph("debt_to_gdp", false, {{ response_obj['debt_to_gdp_labels']|safe }}, {{ response_obj['debt_to_gdp_values']|safe }}, {{ response_obj['debt_to_gdp_max'] }});
+
+    new_drawgraph("domestic_gdp_increase_chart",
+        false,
+        {{ response_obj['domestic_gdp_percent_labels']|safe }},
+        {{ response_obj['domestic_gdp_percent_legends']|safe }},
+        {{ response_obj['domestic_gdp_percent_values']|safe }},
+        {{ response_obj['domestic_gdp_percent_colors']|safe }}
+    );
+
+        new_drawgraph("comparative_gdp_increase_chart",
+        false,
+        {{ response_obj['comparative_gdp_percent_labels']|safe }},
+        {{ response_obj['comparative_gdp_percent_legends']|safe }},
+        {{ response_obj['comparative_gdp_percent_values']|safe }},
+        {{ response_obj['comparative_gdp_percent_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_interest_rate_chart",
+        false,
+        {{ response_obj['domestic_interest_rate_labels']|safe }},
+        {{ response_obj['domestic_interest_rate_legends']|safe }},
+        {{ response_obj['domestic_interest_rate_values']|safe }},
+        {{ response_obj['domestic_interest_rate_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_unemployment_rate_chart",
+        false,
+        {{ response_obj['domestic_unemployment_rate_labels']|safe }},
+        {{ response_obj['domestic_unemployment_rate_legends']|safe }},
+        {{ response_obj['domestic_unemployment_rate_values']|safe }},
+        {{ response_obj['domestic_unemployment_rate_colors']|safe }}
+    );
+
+        new_drawgraph("domestic_bot_chart",
+        false,
+        {{ response_obj['domestic_bot_labels']|safe }},
+        {{ response_obj['domestic_bot_legends']|safe }},
+        {{ response_obj['domestic_bot_values']|safe }},
+        {{ response_obj['domestic_bot_colors']|safe }}
+    );
+
+    new_drawgraph("comparative_bot_chart",
+        false,
+        {{ response_obj['comparative_bot_labels']|safe }},
+        {{ response_obj['comparative_bot_legends']|safe }},
+        {{ response_obj['comparative_bot_values']|safe }},
+        {{ response_obj['comparative_bot_colors']|safe }}
+    );
+
 </script>
 
 

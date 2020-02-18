@@ -53,6 +53,10 @@ function new_drawgraph(id, startAtZero, new_labels, legends, values, colors) {
         scales: {
             yAxes: [{
                 ticks: {
+                      major: {
+                        enabled: true,
+                        fontColor: '#FF5733'
+                      }
 //                    max: 30000000,
 //                    min: 0,
 //                    stepSize: 3000000,

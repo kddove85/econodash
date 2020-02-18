@@ -10,7 +10,7 @@ from currency_converter import CurrencyConverter
 c = CurrencyConverter(fallback_on_missing_rate=True, fallback_on_wrong_date=True)
 
 
-def get_data(data_set, frequency, region, indicator):
+def get_data(data_set, frequency, region, indicator, percent=False):
     legends = []
     labels = []
     values = []
@@ -20,7 +20,6 @@ def get_data(data_set, frequency, region, indicator):
     series = response['CompactData']['DataSet']['Series']
 
     if isinstance(series, dict):
-        print("Dictionary")
         ref_area = series['@REF_AREA']
         country_colors.append(colors.colors[ref_area])
         legends.append(ref_area)
@@ -32,7 +31,6 @@ def get_data(data_set, frequency, region, indicator):
         values.append(values_set)
 
     if isinstance(series, list):
-        print("List")
         date_range = get_range(series)
         for location in series:
             ref_area = location['@REF_AREA']
@@ -44,7 +42,7 @@ def get_data(data_set, frequency, region, indicator):
                 if int(entry['@TIME_PERIOD']) in range(int(date_range['minimum'])-1, int(date_range['maximum'])+1):
                     if entry['@TIME_PERIOD'] not in labels:
                         labels.append(entry['@TIME_PERIOD'])
-                    if ref_area != 'US':
+                    if ref_area != 'US' and not percent:
                         currency_code = countries.countries[ref_area]
                         number = float(entry['@OBS_VALUE'])
                         values_set.append(c.convert(number, currency_code, 'USD',
@@ -54,8 +52,6 @@ def get_data(data_set, frequency, region, indicator):
             values.append(values_set)
         labels.sort()
         values = fill_zero(values)
-
-    print("Done")
 
     return legends, labels, values, country_colors
 
