@@ -6,61 +6,58 @@
 
 <h1 align="center">Economic Indicators</h1>
 
+
+
 <h3>GDP Values (Billions of USD)</h3>
-<div class="jumbotron">
-    <canvas id="chart" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     Gross domestic product (GDP) is a monetary measure of the market value of all the final goods and services produced
     in a specific time period.
 </p>
-<br>
-<br>
-
-<h3>GDP Annual Increases</h3>
-<div class="jumbotron"></div>
-<br>
-<br>
-
-<h3>Interest Rates (%)</h3>
 <div class="jumbotron">
-    <canvas id="interest" style="width:1024px;height:384px"></canvas>
+    <canvas id="domestic_gdp_chart" style="width:1024px;height:384px"></canvas>
 </div>
+<div class="jumbotron">
+    <canvas id="comparative_gdp_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<br>
+<br>
+
+
+
+<h3>GDP Annual Increases (%)</h3>
 <p>
-    In the United States, the federal funds rate is the interest rate at which depository institutions (banks and
-    credit unions) lend reserve balances to other depository institutions overnight on an uncollateralized basis.
+    The Gross Domestic Product increase is the rate of growth of the value of all final goods and services produced
+    within a country in a given year.
 </p>
-<br>
-<br>
 
-<h3>Annual Inflation Rates (%)</h3>
-<div class="jumbotron"></div>
-<br>
-<br>
-
-<h3>Unemployment Rates (%)</h3>
 <div class="jumbotron">
-    <canvas id="unemployment" style="width:1024px;height:384px"></canvas>
+        <canvas id="domestic_gdp_increase_chart" style="width:1024px;height:384px"></canvas>
 </div>
-<p>Unemployment is measured by the unemployment rate as the number of persons who are unemployed as a percentage of the labour force (the total number of people employed plus unemployed).</p>
+<div class="jumbotron">
+        <canvas id="comparative_gdp_increase_chart" style="width:1024px;height:384px"></canvas>
+</div>
 <br>
 <br>
+
+
 
 <h3>Balance of Trade (Billions of USD)</h3>
-<div class="jumbotron">
-    <canvas id="balance_of_trade" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     The balance of trade, commercial balance, or net exports (sometimes symbolized as NX), is the difference between
     the monetary value of a nation's exports and imports over a certain time period.
 </p>
+<div class="jumbotron">
+    <canvas id="domestic_bot_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<div class="jumbotron">
+    <canvas id="comparative_bot_chart" style="width:1024px;height:384px"></canvas>
+</div>
 <br>
 <br>
 
+
+
 <h3>Debt to GDP Ratios (%)</h3>
-<div class="jumbotron">
-    <canvas id="debt_to_gdp" style="width:1024px;height:384px"></canvas>
-</div>
 <p>
     The debt-to-GDP ratio is the ratio between a country's government debt (measured in units of currency) and its gross
     domestic product (GDP) (measured in units of currency per year). A low debt-to-GDP ratio indicates an economy that
@@ -68,46 +65,157 @@
     A high debt-to-GDP ratio indicates an economy that produces and sells goods and services, but not sufficient enough
     to pay back debts without incurring further debt.
 </p>
+<div class="jumbotron">
+    <canvas id="domestic_debt_to_gdp_chart" style="width:1024px;height:384px"></canvas>
+</div>
 <br>
 <br>
 
+
+
+<h3>Interest Rates (%)</h3>
+<p>
+    In the United States, the federal funds rate is the interest rate at which depository institutions (banks and
+    credit unions) lend reserve balances to other depository institutions overnight on an uncollateralized basis.
+</p>
+<div class="jumbotron">
+    <canvas id="domestic_interest_rate_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<br>
+<br>
+
+
+
+<h3>Unemployment Rates (%)</h3>
+<p>Unemployment is measured by the unemployment rate as the number of persons who are unemployed as a percentage of the labour force (the total number of people employed plus unemployed).</p>
+<div class="jumbotron">
+    <canvas id="domestic_unemployment_rate_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<br>
+<br>
+
+
+<!-- Maybe % Change would be better for earnings so it is comparable to CPI -->
+<h3>Average Hourly Earnings of All Employees</h3>
+<p>
+    Average Hourly Earnings.
+</p>
+<div class="jumbotron">
+    <canvas id="domestic_wages_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<br>
+<br>
+
+
+
+<h3>Consumer Price Index % Change Over Last Period</h3>
+<p>
+    The United States Consumer Price Index (CPI) is a set of consumer price indices calculated by the U.S. Bureau of
+    Labor Statistics (BLS). To be precise, the BLS routinely computes many different CPIs that are used for different
+    purposes. Each is a time series measure of the price of consumer goods and services. The BLS publishes the CPI
+    monthly. To simplify, if CPI goes up, the cost of goods and services go up. If the CPI is rising faster than the
+    Average Hourly Earnings, it is a sign wages are not keeping up with inflation.
+</p>
+<div class="jumbotron">
+    <canvas id="domestic_cpi_chart" style="width:1024px;height:384px"></canvas>
+</div>
+<br>
+<br>
+
+
+
+
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script>
-function drawgraph(id, new_labels, values, maximum) {
-  // bar chart data
-  var barData = {
-    labels: new_labels,
-    datasets : [{
-      fillColor: "rgba(151,187,205,0.2)",
-      strokeColor: "rgba(151,187,205,1)",
-      pointColor: "rgba(151,187,205,1)",
-      data: values,
-    }]
-   }
-   // get bar chart canvas
-   var mychart = document.getElementById(id).getContext("2d");
-    var myBarChart = new Chart(mychart, {
-    type: 'bar',
-    data: barData,
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        },
-        legend: {
-            display: false
-        }
-    }
-});
-}
+    new_drawgraph("domestic_gdp_chart",
+        false,
+        {{ response_obj['domestic_gdp_labels']|safe }},
+        {{ response_obj['domestic_gdp_legends']|safe }},
+        {{ response_obj['domestic_gdp_values']|safe }},
+        {{ response_obj['domestic_gdp_colors']|safe }}
+    );
 
-drawgraph("chart", {{ response_obj['gdp_labels']|safe }}, {{ response_obj['gdp_values']|safe }}, {{ response_obj['gdp_values_max'] }});
-drawgraph("interest", {{ response_obj['interest_labels']|safe }}, {{ response_obj['interest_rates']|safe }}, {{ response_obj['interest_rates_max'] }});
-drawgraph("unemployment", {{ response_obj['unemployment_labels']|safe }}, {{ response_obj['unemployment_rates']|safe }}, {{ response_obj['unemployment_rates_max'] }});
-drawgraph("balance_of_trade", {{ response_obj['bot_labels']|safe }}, {{ response_obj['bot_values']|safe }}, {{ response_obj['bot_max'] }});
-drawgraph("debt_to_gdp", {{ response_obj['debt_to_gdp_labels']|safe }}, {{ response_obj['debt_to_gdp_values']|safe }}, {{ response_obj['debt_to_gdp_max'] }});
+    new_drawgraph("comparative_gdp_chart",
+        false,
+        {{ response_obj['comparative_gdp_labels']|safe }},
+        {{ response_obj['comparative_gdp_legends']|safe }},
+        {{ response_obj['comparative_gdp_values']|safe }},
+        {{ response_obj['comparative_gdp_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_gdp_increase_chart",
+        false,
+        {{ response_obj['domestic_gdp_percent_labels']|safe }},
+        {{ response_obj['domestic_gdp_percent_legends']|safe }},
+        {{ response_obj['domestic_gdp_percent_values']|safe }},
+        {{ response_obj['domestic_gdp_percent_colors']|safe }}
+    );
+
+        new_drawgraph("comparative_gdp_increase_chart",
+        false,
+        {{ response_obj['comparative_gdp_percent_labels']|safe }},
+        {{ response_obj['comparative_gdp_percent_legends']|safe }},
+        {{ response_obj['comparative_gdp_percent_values']|safe }},
+        {{ response_obj['comparative_gdp_percent_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_interest_rate_chart",
+        false,
+        {{ response_obj['domestic_interest_rate_labels']|safe }},
+        {{ response_obj['domestic_interest_rate_legends']|safe }},
+        {{ response_obj['domestic_interest_rate_values']|safe }},
+        {{ response_obj['domestic_interest_rate_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_unemployment_rate_chart",
+        false,
+        {{ response_obj['domestic_unemployment_rate_labels']|safe }},
+        {{ response_obj['domestic_unemployment_rate_legends']|safe }},
+        {{ response_obj['domestic_unemployment_rate_values']|safe }},
+        {{ response_obj['domestic_unemployment_rate_colors']|safe }}
+    );
+
+        new_drawgraph("domestic_bot_chart",
+        false,
+        {{ response_obj['domestic_bot_labels']|safe }},
+        {{ response_obj['domestic_bot_legends']|safe }},
+        {{ response_obj['domestic_bot_values']|safe }},
+        {{ response_obj['domestic_bot_colors']|safe }}
+    );
+
+    new_drawgraph("comparative_bot_chart",
+        false,
+        {{ response_obj['comparative_bot_labels']|safe }},
+        {{ response_obj['comparative_bot_legends']|safe }},
+        {{ response_obj['comparative_bot_values']|safe }},
+        {{ response_obj['comparative_bot_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_wages_chart",
+        false,
+        {{ response_obj['domestic_wages_labels']|safe }},
+        {{ response_obj['domestic_wages_legends']|safe }},
+        {{ response_obj['domestic_wages_values']|safe }},
+        {{ response_obj['domestic_wages_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_cpi_chart",
+        false,
+        {{ response_obj['domestic_cpi_labels']|safe }},
+        {{ response_obj['domestic_cpi_legends']|safe }},
+        {{ response_obj['domestic_cpi_values']|safe }},
+        {{ response_obj['domestic_cpi_colors']|safe }}
+    );
+
+    new_drawgraph("domestic_debt_to_gdp_chart",
+        false,
+        {{ response_obj['domestic_debt_to_gdp_labels']|safe }},
+        {{ response_obj['domestic_debt_to_gdp_legends']|safe }},
+        {{ response_obj['domestic_debt_to_gdp_values']|safe }},
+        {{ response_obj['domestic_debt_to_gdp_colors']|safe }}
+    );
+
 </script>
 
 

@@ -1,5 +1,10 @@
 import requests
 import os
+import colors
+import countries
+from datetime import datetime, date, timezone
+from currency_converter import CurrencyConverter
+from frequencies import frequencies
 
 dataset_fred = 'FRED'
 dataset_rateinf = 'RATEINF'
@@ -70,3 +75,21 @@ def get_generic_request(data_set, code):
         values.append(entry[1])
     return labels, values
 
+
+def get_data(data_set, frequency, region, indicator):
+    legends = []
+    labels = []
+    values = []
+    country_colors = []
+    url = f"{base_url}/{data_set}/{indicator}.json?collapse={frequencies[frequency]}&api_key={os.getenv('api_key')}"
+    response = requests.get(url).json()
+    entries = response['dataset']['data'][:50][::-1]
+    country_colors.append(colors.colors[region])
+    legends.append(region)
+    values_set = []
+    for entry in entries:
+        labels.append(entry[0])
+        values_set.append(entry[1])
+    values.append(values_set)
+
+    return legends, labels, values, country_colors
