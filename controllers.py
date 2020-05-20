@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, send_from_directory
-from integrations import quandl
+from integrations import bls
 from integrations import imf
+from integrations import quandl
 
 bp = Blueprint('econodash', __name__)
 
@@ -23,6 +24,23 @@ def index():
                                                                                                        'NNXGS_XDC')
     comparative_bot_legends, comparative_bot_labels, comparative_bot_values, comparative_bot_colors = imf.get_data(
         'IFS', 'A', 'US+CN+GB+JP+DE+SG+HK', 'NNXGS_XDC')
+
+    #  EREER_IX = Actual
+    #  PCPI_PC_PP_PT = % change
+    domestic_cpi_legends, domestic_cpi_labels, domestic_cpi_values, domestic_cpi_colors = imf.get_data(
+        'IFS', 'M', 'US', 'PCPI_PC_PP_PT')
+
+    #  Average Hourly Earnings
+    #  CES0500000003 - Average Hourly Earnings % increase
+    domestic_wages_legends, domestic_wages_labels, domestic_wages_values, domestic_wages_colors = bls.get_data(
+        'CES0500000003')
+
+    # domestic_cpi_legends, domestic_cpi_labels, domestic_cpi_values, domestic_cpi_colors = imf.get_data(
+    #     'IFS', 'M', 'US', 'PCPI_PC_PP_PT', second_series=bls.get_data_dictionary('CES0500000003'))
+    # print(domestic_wages_values)
+
+    domestic_debt_to_gdp_legends, domestic_debt_to_gdp_labels, domestic_debt_to_gdp_values, domestic_debt_to_gdp_colors = quandl.get_data(
+        'FRED', 'A', 'US', 'GFDEGDQ188S')
 
     context = dict(domestic_gdp_legends=domestic_gdp_legends,
                    domestic_gdp_labels=domestic_gdp_labels,
@@ -62,7 +80,22 @@ def index():
                    comparative_bot_legends=comparative_bot_legends,
                    comparative_bot_labels=comparative_bot_labels,
                    comparative_bot_values=comparative_bot_values,
-                   comparative_bot_colors=comparative_bot_colors
+                   comparative_bot_colors=comparative_bot_colors,
+
+                   domestic_wages_legends=domestic_wages_legends,
+                   domestic_wages_labels=domestic_wages_labels,
+                   domestic_wages_values=domestic_wages_values,
+                   domestic_wages_colors=domestic_wages_colors,
+
+                   domestic_cpi_legends=domestic_cpi_legends,
+                   domestic_cpi_labels=domestic_cpi_labels,
+                   domestic_cpi_values=domestic_cpi_values,
+                   domestic_cpi_colors=domestic_cpi_colors,
+
+                   domestic_debt_to_gdp_legends=domestic_debt_to_gdp_legends,
+                   domestic_debt_to_gdp_labels=domestic_debt_to_gdp_labels,
+                   domestic_debt_to_gdp_values=domestic_debt_to_gdp_values,
+                   domestic_debt_to_gdp_colors=domestic_debt_to_gdp_colors,
                    )
 
     return render_template('index.html', response_obj=context)
